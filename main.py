@@ -14,8 +14,17 @@ for var in required_vars:
 
 app = FastAPI()
 
-api = UptimeKumaApi(UPTIME_KUMA_URL)
-api.login(UPTIME_KUMA_USERNAME, UPTIME_KUMA_PASSWORD)
+try:
+    api = UptimeKumaApi(UPTIME_KUMA_URL)
+except:
+    print("Unable to connect to Uptime Kuma")
+    exit(1)
+
+try:
+    api.login(UPTIME_KUMA_USERNAME, UPTIME_KUMA_PASSWORD)
+except:
+    print("Unable to login to Uptime Kuma, check your credentials.")
+    exit(1)
 
 @app.get('/')
 def index():
